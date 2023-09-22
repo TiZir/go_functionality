@@ -36,7 +36,7 @@ func main() {
 				select {
 				case data := <-dataChan:
 					// Выводим данные в stdout
-					fmt.Printf("Worker %d: %s\n", workerNum, data)
+					fmt.Printf("Воркер %d: %s\n", workerNum, data)
 				case <-doneChan:
 					return
 				}
@@ -52,10 +52,10 @@ func main() {
 	select {
 	case <-sigChan:
 		// Получен сигнал об окончании работы программы
-		fmt.Println("Exiting...")
+		fmt.Println("Выход из программы")
 	case <-doneChan:
 		// Получен сигнал об окончании работы воркеров
-		fmt.Println("Workers have finished.")
+		fmt.Println("Воркер завершил работу")
 	}
 
 	// Останавливаем работу воркеров
@@ -63,5 +63,5 @@ func main() {
 
 	// Ожидаем завершения работы воркеров
 	wg.Wait()
-	fmt.Println("Program is finished")
+	fmt.Println("Программы завершила работу")
 }

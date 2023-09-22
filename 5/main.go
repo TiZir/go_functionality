@@ -11,7 +11,7 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	// Отправляем значения в канал
+	// Гоурутина отправляющая значения в канал
 	go func() {
 		for {
 			data := time.Now().Format("2006-01-02 15:04:05")
@@ -20,20 +20,20 @@ func main() {
 		}
 	}()
 
-	// Таймер
+	// Гоурутина с таймером
 	go func() {
 		defer wg.Done()
 		for {
 			select {
 			case <-time.After(time.Second * 12):
 				close(ch)
-				fmt.Println("Time is over. Closing channel...")
+				fmt.Println("Время вышло.")
 				return
 			}
 		}
 	}()
 
-	// Читаем значения из канала
+	// Гоурутина с считыванием данных до тех пор, пока таймер не остановился
 	go func() {
 		defer wg.Done()
 		for {
@@ -49,6 +49,6 @@ func main() {
 	}()
 
 	wg.Wait()
-	fmt.Println("Program is finished")
+	fmt.Println("Программы завершила работу")
 
 }
